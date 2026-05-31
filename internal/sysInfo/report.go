@@ -4,13 +4,7 @@ import "fmt"
 
 func (sr *SystemReport) Render() {
 	//Software
-	sr.OS.GetUser()
-	sr.OS.GetHost()
-	sr.OS.GetOS()
-	sr.OS.GetKernel()
-	sr.OS.GetShell()
-	sr.OS.GetTerm()
-	sr.OS.GetTime()
+	sr.OS.GatherOSInfo()
 
 	//Hardware
 	sr.PC.GetPc()

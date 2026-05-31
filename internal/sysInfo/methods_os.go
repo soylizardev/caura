@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-func (i *InfoOs) GetHost() {
-	output, err := os.ReadFile("/proc/sys/kernel/hostname")
+func (i *InfoOs) GetHost(file string) {
+	output, err := os.ReadFile(file)
 	if err != nil {
 		i.Host = "Unknown"
 		return
@@ -17,12 +17,11 @@ func (i *InfoOs) GetHost() {
 	i.Host = strings.TrimSpace(string(output))
 }
 
-func (i *InfoOs) GetOS() {
-	content, errDis := os.ReadFile("/etc/os-release")
+func (i *InfoOs) GetOS(file1, file2 string) {
+	content, errDis := os.ReadFile(file1)
 	var distro string
 	if errDis != nil {
 		distro = "Unknown"
-		return
 	}
 
 	lines := strings.SplitSeq(string(content), "\n")
@@ -36,7 +35,7 @@ func (i *InfoOs) GetOS() {
 		}
 	}
 
-	output, err := os.ReadFile("/proc/sys/kernel/ostype")
+	output, err := os.ReadFile(file2)
 	if err != nil {
 		i.OS = "Unknown"
 		return
@@ -44,8 +43,8 @@ func (i *InfoOs) GetOS() {
 	i.OS = fmt.Sprintf("%s (%s)", distro, strings.TrimSpace(string(output)))
 }
 
-func (i *InfoOs) GetKernel() {
-	output, err := os.ReadFile("/proc/sys/kernel/osrelease")
+func (i *InfoOs) GetKernel(file string) {
+	output, err := os.ReadFile(file)
 	if err != nil {
 		i.Kernel = "Unknown"
 		return
@@ -62,8 +61,8 @@ func (i *InfoOs) GetUser() {
 	i.User = output.Username
 }
 
-func (i *InfoOs) GetTerm() {
-	cmd := os.Getenv("TERM")
+func (i *InfoOs) GetTerm(envVar string) {
+	cmd := os.Getenv(envVar)
 	if cmd == "" {
 		i.Terminal = "Unknown"
 		return
@@ -84,8 +83,8 @@ func (i *InfoOs) GetTerm() {
 	i.Terminal = terminal
 }
 
-func (i *InfoOs) GetShell() {
-	cmd := os.Getenv("SHELL")
+func (i *InfoOs) GetShell(envVar string) {
+	cmd := os.Getenv(envVar)
 	if cmd == "" {
 		i.Shell = "Unknown"
 		return
@@ -94,8 +93,8 @@ func (i *InfoOs) GetShell() {
 	i.Shell = shellComp[len(shellComp)-1]
 }
 
-func (i *InfoOs) GetTime() {
-	read, err := os.ReadFile("/proc/uptime")
+func (i *InfoOs) GetUptime(file string) {
+	read, err := os.ReadFile(file)
 
 	if err != nil {
 		i.Uptime = "Unknown"
