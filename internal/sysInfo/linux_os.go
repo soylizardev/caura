@@ -2,12 +2,61 @@
 
 package sysinfo
 
-func (i *InfoOs) GatherOSInfo() {
-	i.GetHost("/proc/sys/kernel/hostname")
-	i.GetOS("/etc/os-release", "/proc/sys/kernel/ostype")
-	i.GetKernel("/proc/sys/kernel/osrelease")
-	i.GetUser()
-	i.GetTerm("TERM")
-	i.GetShell("SHELL")
-	i.GetUptime("/proc/uptime")
+import (
+	"fmt"
+	"strings"
+)
+
+func (s *SystemInfo) GetHost() {
+	host := ReadFile("/proc/sys/kernel/hostname")
+	s.Host = host
+}
+
+func (s *SystemInfo) GetOS() {
+	content := ReadFile("/etc/os-release")
+	var distro string
+	lines := strings.SplitSeq(content, "\n")
+	for line := range lines {
+		if strings.HasPrefix(line, "PRETTY_NAME=") {
+			div := strings.Split(line, "=")
+			if len(div) > 1 {
+				distro = strings.Trim(strings.TrimSpace(div[1]), "\"")
+				break
+			}
+		}
+	}
+
+	output := ReadFile("/proc/sys/kernel/ostype")
+	s.OS = fmt.Sprintf("%s (%s)", distro, strings.TrimSpace(string(output)))
+}
+
+func (s *SystemInfo) GetKernel() {
+	output := ReadFile("/proc/sys/kernel/osrelease")
+	s.Kernel = output
+}
+
+func (s *SystemInfo) GetUser() {
+	s.User = UserCurrent()
+}
+
+func (s *SystemInfo) GetTerm() {
+	s.Terminal = EnvTerm("TERM")
+}
+
+func (s *SystemInfo) GetShell() {
+	s.Shell = EnvShell("SHELL")
+}
+
+func (s *SystemInfo) GetUptime() {
+	read := ReadFile("/proc/uptime")
+
+	readStr := string(read)
+	parts := strings.Split(readStr, " ")
+	if len(parts) == 0 {
+		s.Uptime = "Unknown"
+		return
+	}
+	secs := strings.Split(parts[0], ".")[0]
+
+	s.Uptime = FormatUptime(secs)
 }
