@@ -88,7 +88,7 @@ func (s *SystemInfo) GetRam() {
 	availableGB := availableMemory / kbToGb
 	memUsed := totalGB - availableGB
 
-	s.Ram = fmt.Sprintf("%.1f GiB / %.1f GiB", memUsed, totalGB)
+	s.Ram = fmt.Sprintf("%.2f GiB / %.2f GiB", memUsed, totalGB)
 }
 
 func (s *SystemInfo) GetSwap() {
@@ -119,5 +119,5 @@ func (s *SystemInfo) GetSwap() {
 	}
 	freeGB := freeSwap / kbToGb
 	swapUsed := totalGB - freeGB
-	s.Swap = fmt.Sprintf("%.1f GiB / %.1f GiB", swapUsed, totalGB)
+	s.Swap = fmt.Sprintf("%.2f GiB / %.2f GiB", swapUsed, totalGB)
 }
