@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-func (s *SystemInfo) GetHost() {
-	host := ReadFile("/proc/sys/kernel/hostname")
-	s.Host = host
-}
-
 func (s *SystemInfo) GetOS() {
 	content := ReadFile("/etc/os-release")
 	var distro string
@@ -35,18 +30,6 @@ func (s *SystemInfo) GetKernel() {
 	s.Kernel = output
 }
 
-func (s *SystemInfo) GetUser() {
-	s.User = UserCurrent()
-}
-
-func (s *SystemInfo) GetTerm() {
-	s.Terminal = EnvTerm("TERM")
-}
-
-func (s *SystemInfo) GetShell() {
-	s.Shell = EnvShell("SHELL")
-}
-
 func (s *SystemInfo) GetUptime() {
 	read := ReadFile("/proc/uptime")
 
@@ -56,7 +39,7 @@ func (s *SystemInfo) GetUptime() {
 		s.Uptime = "Unknown"
 		return
 	}
-	secs := strings.Split(parts[0], ".")[0]
+	secs, _, _ := strings.Cut(parts[0], ".")
 
 	s.Uptime = FormatUptime(secs)
 }

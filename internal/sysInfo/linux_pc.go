@@ -44,11 +44,6 @@ func (s *SystemInfo) GetCPU() {
 	s.CPU = fmt.Sprintf("%s (%s Cores / %d Threads)", cpuModel, cpuCores, cpuThreads)
 }
 
-func (s *SystemInfo) GetArch() {
-	output := ReadFile("/proc/sys/kernel/arch")
-	s.Arch = output
-}
-
 func (s *SystemInfo) GetGraphic() {
 	out := ExecCommand("sh", "-c", "lspci | grep -i vga")
 	split := strings.Split(out, ":")
