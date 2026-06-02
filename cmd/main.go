@@ -1,6 +1,6 @@
 package main
 
-import "gopry/internal/sysInfo"
+import "caura/internal/sysInfo"
 
 func main() {
 	report := &sysinfo.SystemInfo{}
