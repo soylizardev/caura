@@ -70,6 +70,12 @@ lizardev@serverBSD
 
 - [Go](https://go.dev/dl/) version 1.24 or higher
 
+#### Install with Go
+
+```bash
+go install github.com/soylizardev/caura@latest
+```
+
 #### Install from source
 
 ```bash
@@ -78,7 +84,7 @@ git clone https://github.com/soylizardev/caura.git
 cd caura
 
 # Build the binary
-go build -o caura ./cmd/
+go build -o caura .
 
 # Move to a directory in your PATH (optional)
 # Examples:
@@ -93,7 +99,7 @@ caura
 
 ```bash
 # For FreeBSD (amd64)
-GOOS=freebsd GOARCH=amd64 go build -o caura-freebsd ./cmd/
+GOOS=freebsd GOARCH=amd64 go build -o caura-freebsd .
 ```
 
 ### Usage
@@ -185,6 +191,12 @@ lizardev@serverBSD
 
 - [Go](https://go.dev/dl/) versión 1.24 o superior
 
+#### Instalar con Go
+
+```bash
+go install github.com/soylizardev/caura@latest
+```
+
 #### Instalar desde el código fuente
 
 ```bash
@@ -193,7 +205,7 @@ git clone https://github.com/soylizardev/caura.git
 cd caura
 
 # Compilar el binario
-go build -o caura ./cmd/
+go build -o caura .
 
 # Mover a un directorio en tu PATH (opcional)
 # Ejemplos:
@@ -208,7 +220,7 @@ caura
 
 ```bash
 # Para FreeBSD (amd64)
-GOOS=freebsd GOARCH=amd64 go build -o caura-freebsd ./cmd/
+GOOS=freebsd GOARCH=amd64 go build -o caura-freebsd .
 ```
 
 ### Uso
