@@ -68,7 +68,7 @@ lizardev@serverBSD
 
 #### Prerequisites
 
-- [Go](https://go.dev/dl/) version 1.26.3 or higher
+- [Go](https://go.dev/dl/) version 1.24 or higher
 
 #### Install from source
 
@@ -183,7 +183,7 @@ lizardev@serverBSD
 
 #### Requisitos
 
-- [Go](https://go.dev/dl/) versión 1.26.3 o superior
+- [Go](https://go.dev/dl/) versión 1.24 o superior
 
 #### Instalar desde el código fuente
 
