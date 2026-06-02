@@ -1,3 +1,4 @@
 caura
-!*.go
+caura-fb-prueba
 caura-freebsd
+!*.go
