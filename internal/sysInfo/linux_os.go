@@ -32,9 +32,7 @@ func (s *SystemInfo) GetKernel() {
 
 func (s *SystemInfo) GetUptime() {
 	read := ReadFile("/proc/uptime")
-
-	readStr := string(read)
-	parts := strings.Split(readStr, " ")
+	parts := strings.Fields(read)
 	if len(parts) == 0 {
 		s.Uptime = "Unknown"
 		return

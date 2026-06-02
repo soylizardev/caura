@@ -10,6 +10,7 @@ func (s *SystemInfo) Render() {
 	s.GetUptime()
 	s.GetShell()
 	s.GetTerm()
+	s.GetIP()
 	s.GetPc()
 	s.GetCPU()
 	s.GetArch()
@@ -29,6 +30,7 @@ func (s *SystemInfo) Render() {
 	fmt.Printf("   \033[1;36mUptime:\033[0m   %s\n", s.Uptime)
 	fmt.Printf("   \033[1;36mShell:\033[0m    %s\n", s.Shell)
 	fmt.Printf("   \033[1;36mTerminal:\033[0m %s\n", s.Terminal)
+	fmt.Printf("   \033[1;36mIp:\033[0m       %s\n", s.IP)
 
 	fmt.Println("   ------------------PC--------------------")
 

@@ -4,8 +4,10 @@ package sysinfo
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"os/user"
+	"runtime"
 	"strings"
 	"syscall"
 )
@@ -14,6 +16,7 @@ func (s *SystemInfo) GetHost() {
 	host, err := os.Hostname()
 	if err != nil {
 		s.Host = "Unknown"
+		return
 	}
 	s.Host = host
 }
@@ -59,6 +62,23 @@ func (s *SystemInfo) GetShell() {
 	s.Shell = shellComp[len(shellComp)-1]
 }
 
+func (s *SystemInfo) GetIP() {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		s.IP = "Unknown"
+		return
+	}
+	for _, addr := range addrs {
+		ipnet, ok := addr.(*net.IPNet)
+		if !ok || ipnet.IP.IsLoopback() || ipnet.IP.To4() == nil {
+			continue
+		}
+		s.IP = ipnet.IP.String()
+		return
+	}
+	s.IP = "Unknown"
+}
+
 func (s *SystemInfo) GetDisk() {
 	var stat syscall.Statfs_t
 	err := syscall.Statfs("/", &stat)
@@ -76,17 +96,5 @@ func (s *SystemInfo) GetDisk() {
 }
 
 func (s *SystemInfo) GetArch() {
-	var uname syscall.Utsname
-	if err := syscall.Uname(&uname); err != nil {
-		s.Arch = "Unknown"
-		return
-	}
-	var arch []byte
-	for _, b := range uname.Machine {
-		if b == 0 {
-			break
-		}
-		arch = append(arch, byte(b))
-	}
-	s.Arch = string(arch)
+	s.Arch = runtime.GOARCH
 }

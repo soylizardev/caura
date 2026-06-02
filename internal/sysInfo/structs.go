@@ -7,6 +7,7 @@ type SystemInfo struct {
 	User     string
 	Terminal string
 	Shell    string
+	IP       string
 	Uptime   string
 	Pc       string
 	Arch     string
