@@ -109,11 +109,21 @@ func (s *SystemInfo) GetRam() {
 	available := (free + inactive) * pageSize
 	used := total - available
 
-	const bytesToGiB = 1073741824.0
-	totalGiB := total / bytesToGiB
-	usedGiB := used / bytesToGiB
+	const bytesToGB = 1073741824.0
+	totalGB := total / bytesToGB
+	usedGB := used / bytesToGB
+	if ZFSDetect() {
+		arcBytes := ZFSArcSize()
+		arcGB := float64(arcBytes) / 1073741824.0
+		usedGB -= arcGB
+		if usedGB < 0 {
+			usedGB = 0
+		}
+		s.Ram = fmt.Sprintf("%.2f GiB / %.2f GiB (ARC: %.2f GiB)", usedGB, totalGB, arcGB)
+		return
+	}
 
-	s.Ram = fmt.Sprintf("%.1f GiB / %.1f GiB", usedGiB, totalGiB)
+	s.Ram = fmt.Sprintf("%.2f GiB / %.2f GiB", usedGB, totalGB)
 }
 
 func (s *SystemInfo) GetSwap() {
@@ -144,5 +154,5 @@ func (s *SystemInfo) GetSwap() {
 	totalGiB := totalKB / kbToGiB
 	usedGiB := usedKB / kbToGiB
 
-	s.Swap = fmt.Sprintf("%.1f GiB / %.1f GiB", usedGiB, totalGiB)
+	s.Swap = fmt.Sprintf("%.2f GiB / %.2f GiB", usedGiB, totalGiB)
 }

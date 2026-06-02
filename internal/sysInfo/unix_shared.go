@@ -80,6 +80,10 @@ func (s *SystemInfo) GetIP() {
 }
 
 func (s *SystemInfo) GetDisk() {
+	if ZFSDetect() {
+		s.Disk = ZFSPoolInfo()
+		return
+	}
 	var stat syscall.Statfs_t
 	err := syscall.Statfs("/", &stat)
 	if err != nil {
