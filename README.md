@@ -82,7 +82,7 @@ go install github.com/soylizardev/caura@latest
 > export PATH=$PATH:~/go/bin
 > ```
 > ```fish
-> # Fish (~/.config/fish/config.fish)
+> # Fish (~/.config/fish/fish_variables)
 > fish_add_path ~/go/bin
 > ```
 > ```zsh
