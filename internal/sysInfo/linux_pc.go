@@ -82,7 +82,16 @@ func (s *SystemInfo) GetRam() {
 
 	availableGB := availableMemory / kbToGb
 	memUsed := totalGB - availableGB
-
+	if ZFSDetect() {
+		arcBytes := ZFSArcSize()
+		arcGB := float64(arcBytes) / 1073741824.0
+		memUsed -= arcGB
+		if memUsed < 0 {
+			memUsed = 0
+		}
+		s.Ram = fmt.Sprintf("%.2f GiB / %.2f GiB (ARC: %.2f GiB)", memUsed, totalGB, arcGB)
+		return
+	}
 	s.Ram = fmt.Sprintf("%.2f GiB / %.2f GiB", memUsed, totalGB)
 }
 
