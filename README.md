@@ -211,7 +211,7 @@ lizardev@serverBSD
 go install github.com/soylizardev/caura@latest
 ```
 
-> **Nota:** Asegurate de que `~/go/bin` (o `$GOPATH/bin`) esté en tu `PATH`. Agregá esto a la configuración de tu shell si hace falta:
+> **Nota:** Asegúrate de que `~/go/bin` (o `$GOPATH/bin`) esté en tu `PATH`. Agrega esto a la configuración de tu shell si hace falta:
 > ```bash
 > # Bash (~/.bashrc)
 > export PATH=$PATH:~/go/bin
