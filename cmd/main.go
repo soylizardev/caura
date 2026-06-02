@@ -1,6 +1,6 @@
 package main
 
-import "caura/internal/sysInfo"
+import "github.com/soylizardev/caura/internal/sysInfo"
 
 func main() {
 	report := &sysinfo.SystemInfo{}
