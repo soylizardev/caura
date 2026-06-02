@@ -72,9 +72,23 @@ lizardev@serverBSD
 
 #### Install with Go
 
-```bash
+ ```bash
 go install github.com/soylizardev/caura@latest
 ```
+
+> **Note:** Make sure `~/go/bin` (or `$GOPATH/bin`) is in your `PATH`. Add this to your shell config if needed:
+> ```bash
+> # Bash (~/.bashrc)
+> export PATH=$PATH:~/go/bin
+> ```
+> ```fish
+> # Fish (~/.config/fish/config.fish)
+> fish_add_path ~/go/bin
+> ```
+> ```zsh
+> # Zsh (~/.zshrc)
+> export PATH=$PATH:~/go/bin
+> ```
 
 #### Install from source
 
@@ -193,9 +207,23 @@ lizardev@serverBSD
 
 #### Instalar con Go
 
-```bash
+ ```bash
 go install github.com/soylizardev/caura@latest
 ```
+
+> **Nota:** Asegurate de que `~/go/bin` (o `$GOPATH/bin`) esté en tu `PATH`. Agregá esto a la configuración de tu shell si hace falta:
+> ```bash
+> # Bash (~/.bashrc)
+> export PATH=$PATH:~/go/bin
+> ```
+> ```fish
+> # Fish (~/.config/fish/config.fish)
+> fish_add_path ~/go/bin
+> ```
+> ```zsh
+> # Zsh (~/.zshrc)
+> export PATH=$PATH:~/go/bin
+> ```
 
 #### Instalar desde el código fuente
 
