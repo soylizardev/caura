@@ -1,9 +1,23 @@
 package main
 
-import "github.com/soylizardev/caura/internal/sysInfo"
+import (
+	"flag"
+	"fmt"
+	"github.com/soylizardev/caura/internal/sysInfo"
+)
+
+const version = "v0.1.2"
 
 func main() {
-	report := &sysinfo.SystemInfo{}
+	showVersion := flag.Bool("version", false, "Show version")
+	flag.BoolVar(showVersion, "v", false, "Show version (short)")
+	flag.Parse()
 
+	if *showVersion {
+		fmt.Println("caura", version)
+		return
+	}
+
+	report := &sysinfo.SystemInfo{}
 	report.Render()
 }
