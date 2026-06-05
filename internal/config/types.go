@@ -1,6 +1,12 @@
 package config
 
+type Theme struct {
+	Enabled bool   `toml:"enabled"`
+	Path    string `toml:"path"`
+}
+
 type Config struct {
+	Theme  Theme   `toml:"theme"`
 	Header Header  `toml:"header"`
 	Footer Footer  `toml:"footer"`
 	Groups []Group `toml:"groups"`

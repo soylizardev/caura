@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/pelletier/go-toml/v2"
 )
@@ -56,14 +57,38 @@ func Load(path string) (*Config, error) {
 	if err := toml.Unmarshal(data, &cfg); err != nil {
 		return nil, err
 	}
+
+	if cfg.Theme.Enabled && cfg.Theme.Path != "" {
+		themePath := expandPath(cfg.Theme.Path)
+		themeData, err := os.ReadFile(themePath)
+		if err == nil {
+			var themeCfg Config
+			if err := toml.Unmarshal(themeData, &themeCfg); err == nil {
+				return &themeCfg, nil
+			}
+		}
+	}
+
 	return &cfg, nil
 }
 
+func expandPath(path string) string {
+	if strings.HasPrefix(path, "~/") {
+		home, err := os.UserHomeDir()
+		if err == nil {
+			return filepath.Join(home, path[2:])
+		}
+	}
+	return path
+}
+
 func writeDefault(path string, cfg *Config) error {
-	dir := filepath.Dir(path)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	baseDir := filepath.Dir(path)
+	if err := os.MkdirAll(baseDir, 0755); err != nil {
 		return err
 	}
+	os.MkdirAll(filepath.Join(baseDir, "theme"), 0755)
+	os.MkdirAll(filepath.Join(baseDir, "logo", "text"), 0755)
 	data := `# =============================================================================
 # caura v0.2.1 — Configuration file
 # =============================================================================
@@ -74,6 +99,14 @@ func writeDefault(path string, cfg *Config) error {
 #         Leave empty for terminal default color.
 # Fields: see each section for available field names.
 # =============================================================================
+
+# --- Theme ------------------------------------------------------------------
+# If enabled and the path points to an existing TOML file, the entire
+# configuration is loaded from that file (the rest of this file is ignored).
+# If disabled, or the path is invalid, this file is used as-is.
+# [theme]
+# enabled = true
+# path = "~/.config/caura/theme/mi_tema.toml"
 
 # --- Header ----------------------------------------------------------------
 # The first line of output (e.g., user@hostname).
