@@ -63,9 +63,72 @@ func writeDefault(path string, cfg *Config) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
 	}
-	data, err := toml.Marshal(cfg)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(path, data, 0644)
+	data := `# =============================================================================
+# caura v0.2.0 — Configuration file
+# =============================================================================
+# This file is auto-generated on first run.
+# Edit it to customize the output of caura.
+#
+# Colors: #RRGGBB format (e.g., #ff0000 for red).
+#         Leave empty for terminal default color.
+# Fields: see each section for available field names.
+# =============================================================================
+
+# --- Header ----------------------------------------------------------------
+# The first line of output (e.g., user@hostname).
+[header]
+enabled = true
+
+# Optional text line printed before the fields.
+# text = ""
+# color = ""
+
+# Separator between header fields.
+separator = "@"
+sep_color = "#6c7086"
+
+# Color for field values in the header.
+# value_color = ""
+
+# Available fields: User, Hostname
+# User     -> current username
+# Hostname -> system hostname
+fields = ["User", "Hostname"]
+
+# --- Groups ----------------------------------------------------------------
+# Each group is a section with a title and fields.
+# You can add, remove, or reorder groups freely.
+# Available fields for any group:
+#   OS, Kernel, Uptime, Shell, Terminal, IP,
+#   PC, CPU, Arch, Graphics, Disk, Memory, Swap,
+#   Hostname, Host
+#   Host     -> full PC description (product name/model)
+#   Hostname -> short system hostname
+
+[[groups]]
+title = "   ------------------OS--------------------"
+title_color = "#cb6ff6"
+separator = ": "
+sep_color = "#6c7086"
+key_color = "#b4befe"
+# value_color = ""
+fields = ["OS", "Kernel", "Uptime", "Shell", "Terminal", "IP"]
+
+[[groups]]
+title = "   ------------------PC--------------------"
+title_color = "#cb6ff6"
+separator = ": "
+sep_color = "#6c7086"
+key_color = "#b4befe"
+# value_color = ""
+fields = ["PC", "CPU", "Arch", "Graphics", "Disk", "Memory", "Swap"]
+
+# --- Footer ----------------------------------------------------------------
+# A closing line at the end of the output.
+[footer]
+enabled = true
+text = "   ----------------------------------------"
+color = "#6c7086"
+`
+	return os.WriteFile(path, []byte(data), 0644)
 }
