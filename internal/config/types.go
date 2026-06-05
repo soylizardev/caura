@@ -9,6 +9,7 @@ type Config struct {
 type Header struct {
 	Enabled    bool     `toml:"enabled"`
 	Text       string   `toml:"text"`
+	Color      string   `toml:"color"`
 	Separator  string   `toml:"separator"`
 	SepColor   string   `toml:"sep_color"`
 	KeyColor   string   `toml:"key_color"`

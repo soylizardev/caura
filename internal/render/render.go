@@ -10,14 +10,19 @@ import (
 
 func Render(s *sysinfo.SystemInfo, cfg *config.Config) {
 	if cfg.Header.Enabled {
-		fmt.Print("   ")
-		for i, field := range cfg.Header.Fields {
-			if i > 0 {
-				fmt.Print(colorize(cfg.Header.SepColor, cfg.Header.Separator))
-			}
-			fmt.Print(colorize(cfg.Header.ValueColor, getFieldValue(s, field)))
+		if cfg.Header.Text != "" {
+			fmt.Println(colorize(cfg.Header.Color, cfg.Header.Text))
 		}
-		fmt.Println()
+		if len(cfg.Header.Fields) > 0 {
+			fmt.Print("   ")
+			for i, field := range cfg.Header.Fields {
+				if i > 0 {
+					fmt.Print(colorize(cfg.Header.SepColor, cfg.Header.Separator))
+				}
+				fmt.Print(colorize(cfg.Header.ValueColor, getFieldValue(s, field)))
+			}
+			fmt.Println()
+		}
 	}
 	for _, group := range cfg.Groups {
 		if group.Title != "" {
