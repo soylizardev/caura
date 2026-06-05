@@ -13,7 +13,7 @@ func DefaultConfig() *Config {
 			Enabled:   true,
 			Separator: "@",
 			SepColor:  "#6c7086",
-			Fields:    []string{"User", "Host"},
+			Fields:    []string{"User", "Hostname"},
 		},
 		Groups: []Group{
 			{
@@ -104,6 +104,7 @@ fields = ["User", "Hostname"]
 #   Hostname, Host
 #   Host     -> full PC description (product name/model)
 #   Hostname -> short system hostname
+#   (yes, Host != Hostname; Host is the product, Hostname is the network name)
 
 [[groups]]
 title = "   ------------------OS--------------------"

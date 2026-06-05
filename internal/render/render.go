@@ -47,6 +47,8 @@ func getFieldValue(s *sysinfo.SystemInfo, field string) string {
 	case "User":
 		return s.User
 	case "Host":
+		return s.Pc
+	case "Hostname":
 		return s.Host
 	case "Terminal":
 		return s.Terminal
@@ -64,8 +66,8 @@ func getFieldValue(s *sysinfo.SystemInfo, field string) string {
 		return s.Kernel
 	case "Uptime":
 		return s.Uptime
-	case "PC", "Hostname":
-		return s.Pc // alias
+	case "PC":
+		return s.Pc
 	case "CPU":
 		return s.CPU
 	case "Graphics":
