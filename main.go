@@ -11,7 +11,7 @@ import (
 	"github.com/soylizardev/caura/internal/sysInfo"
 )
 
-const version = "v0.2.0"
+const version = "v0.2.1"
 
 func main() {
 	showVersion := flag.Bool("version", false, "Show version")

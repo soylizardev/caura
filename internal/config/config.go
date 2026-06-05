@@ -64,7 +64,7 @@ func writeDefault(path string, cfg *Config) error {
 		return err
 	}
 	data := `# =============================================================================
-# caura v0.2.0 — Configuration file
+# caura v0.2.1 — Configuration file
 # =============================================================================
 # This file is auto-generated on first run.
 # Edit it to customize the output of caura.
