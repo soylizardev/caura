@@ -7,18 +7,27 @@ type Config struct {
 }
 
 type Header struct {
-	Enabled   bool     `toml:"enabled"`
-	Separator string   `toml:"separator"`
-	Fields    []string `toml:"fields"`
+	Enabled    bool     `toml:"enabled"`
+	Text       string   `toml:"text"`
+	Separator  string   `toml:"separator"`
+	SepColor   string   `toml:"sep_color"`
+	KeyColor   string   `toml:"key_color"`
+	ValueColor string   `toml:"value_color"`
+	Fields     []string `toml:"fields"`
 }
 
 type Footer struct {
 	Enabled bool   `toml:"enabled"`
 	Text    string `toml:"text"`
+	Color   string `toml:"color"`
 }
 
 type Group struct {
-	Title     string   `toml:"title"`
-	Separator string   `toml:"separator"`
-	Fields    []string `toml:"fields"`
+	Title      string   `toml:"title"`
+	TitleColor string   `toml:"title_color"`
+	Separator  string   `toml:"separator"`
+	SepColor   string   `toml:"sep_color"`
+	KeyColor   string   `toml:"key_color"`
+	ValueColor string   `toml:"value_color"`
+	Fields     []string `toml:"fields"`
 }
