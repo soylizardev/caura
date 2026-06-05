@@ -90,7 +90,7 @@ func writeDefault(path string, cfg *Config) error {
 	os.MkdirAll(filepath.Join(baseDir, "theme"), 0755)
 	os.MkdirAll(filepath.Join(baseDir, "logo", "text"), 0755)
 	data := `# =============================================================================
-# caura v0.2.1 — Configuration file
+# caura v0.2.2 — Configuration file
 # =============================================================================
 # This file is auto-generated on first run.
 # Edit it to customize the output of caura.
