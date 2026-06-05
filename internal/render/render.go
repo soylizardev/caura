@@ -3,6 +3,7 @@ package render
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/soylizardev/caura/internal/config"
 	"github.com/soylizardev/caura/internal/sysInfo"
@@ -10,35 +11,21 @@ import (
 
 func Render(s *sysinfo.SystemInfo, cfg *config.Config) {
 	if cfg.Header.Enabled {
-		if cfg.Header.Text != "" {
-			fmt.Println(colorize(cfg.Header.Color, cfg.Header.Text))
-		}
-		if len(cfg.Header.Fields) > 0 {
-			fmt.Print("   ")
-			for i, field := range cfg.Header.Fields {
-				if i > 0 {
-					fmt.Print(colorize(cfg.Header.SepColor, cfg.Header.Separator))
-				}
-				fmt.Print(colorize(cfg.Header.ValueColor, getFieldValue(s, field)))
-			}
-			fmt.Println()
-		}
+		renderHeader(s, cfg.Header)
 	}
 	for _, group := range cfg.Groups {
-		if group.Title != "" {
-			fmt.Println(colorize(group.TitleColor, group.Title))
-		}
-		for _, field := range group.Fields {
-			value := getFieldValue(s, field)
-			fmt.Printf("   %s%s%s\n",
-				colorize(group.KeyColor, field),
-				colorize(group.SepColor, group.Separator),
-				colorize(group.ValueColor, value),
-			)
-		}
+		renderGroup(s, group)
 	}
 	if cfg.Footer.Enabled {
-		fmt.Println(colorize(cfg.Footer.Color, cfg.Footer.Text))
+		renderFooter(cfg.Footer)
+	}
+}
+
+func renderFooter(f config.Footer) {
+	for _, t := range f.Texts {
+		for _, line := range strings.Split(t.Text, "\n") {
+			fmt.Println(colorize(t.Color, "   "+line))
+		}
 	}
 }
 

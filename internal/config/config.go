@@ -17,7 +17,7 @@ func DefaultConfig() *Config {
 		},
 		Groups: []Group{
 			{
-				Title:      "   ------------------OS--------------------",
+				Title:      "------------------OS--------------------",
 				TitleColor: "#cb6ff6",
 				Separator:  ": ",
 				SepColor:   "#6c7086",
@@ -25,7 +25,7 @@ func DefaultConfig() *Config {
 				Fields:     []string{"OS", "Kernel", "Uptime", "Shell", "Terminal", "IP"},
 			},
 			{
-				Title:      "   ------------------PC--------------------",
+				Title:      "------------------PC--------------------",
 				TitleColor: "#cb6ff6",
 				Separator:  ": ",
 				SepColor:   "#6c7086",
@@ -35,8 +35,9 @@ func DefaultConfig() *Config {
 		},
 		Footer: Footer{
 			Enabled: true,
-			Text:    "   ----------------------------------------",
-			Color:   "#6c7086",
+			Texts: []TextLine{
+				{Text: "----------------------------------------", Color: "#6c7086"},
+			},
 		},
 	}
 }
@@ -79,9 +80,11 @@ func writeDefault(path string, cfg *Config) error {
 [header]
 enabled = true
 
-# Optional text line printed before the fields.
-# text = ""
-# color = ""
+# Optional text lines printed before the fields.
+# Add as many as you want:
+# [[header.texts]]
+# text = "My ASCII logo"
+# color = "#ffffff"
 
 # Separator between header fields.
 separator = "@"
@@ -89,6 +92,11 @@ sep_color = "#6c7086"
 
 # Color for field values in the header.
 # value_color = ""
+
+# Padding: pad_sep controls spaces between separator and next value.
+#   Not set / 0 → no extra gap.
+#   > 0         → N spaces after separator.
+# pad_sep = 2
 
 # Available fields: User, Hostname
 # User     -> current username
@@ -98,6 +106,7 @@ fields = ["User", "Hostname"]
 # --- Groups ----------------------------------------------------------------
 # Each group is a section with a title and fields.
 # You can add, remove, or reorder groups freely.
+#
 # Available fields for any group:
 #   OS, Kernel, Uptime, Shell, Terminal, IP,
 #   PC, CPU, Arch, Graphics, Disk, Memory, Swap,
@@ -105,30 +114,47 @@ fields = ["User", "Hostname"]
 #   Host     -> full PC description (product name/model)
 #   Hostname -> short system hostname
 #   (yes, Host != Hostname; Host is the product, Hostname is the network name)
+#
+# Padding controls alignment per group:
+#   pad_key   Not set / 0 → key natural width.
+#             > 0         → key padded to exactly N chars.
+#   pad_sep   Not set     → all values aligned (keys padded to longest in group).
+#             0           → value glued to separator.
+#             > 0         → N fixed spaces between separator and value.
 
 [[groups]]
-title = "   ------------------OS--------------------"
+title = "------------------OS--------------------"
 title_color = "#cb6ff6"
 separator = ": "
 sep_color = "#6c7086"
 key_color = "#b4befe"
 # value_color = ""
+# pad_key = 0
+# pad_sep = 2
 fields = ["OS", "Kernel", "Uptime", "Shell", "Terminal", "IP"]
 
 [[groups]]
-title = "   ------------------PC--------------------"
+title = "------------------PC--------------------"
 title_color = "#cb6ff6"
 separator = ": "
 sep_color = "#6c7086"
 key_color = "#b4befe"
 # value_color = ""
+# pad_key = 0
+# pad_sep = 2
 fields = ["PC", "CPU", "Arch", "Graphics", "Disk", "Memory", "Swap"]
 
 # --- Footer ----------------------------------------------------------------
 # A closing line at the end of the output.
+# Add as many text lines as you want:
+# [[footer.texts]]
+# text = "My footer text"
+# color = "#6c7086"
 [footer]
 enabled = true
-text = "   ----------------------------------------"
+
+[[footer.texts]]
+text = "----------------------------------------"
 color = "#6c7086"
 `
 	return os.WriteFile(path, []byte(data), 0644)
